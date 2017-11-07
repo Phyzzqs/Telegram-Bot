@@ -6,7 +6,6 @@ import logging
 import sys
 from .config import get_config
 from telegram.ext import Updater
-#from plugins import *
 
 class Bot:
     PLUGINS = {}
@@ -20,9 +19,19 @@ class Bot:
             return plugin
         return wrapper
     
+    def start_log(self):
+        level = logging.INFO
+        formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        logging.basicConfig(format=formatter, level=level, \
+            filename="app.log", filemode="a")
+        console = logging.StreamHandler()
+        console.setLevel(level)
+        console.setFormatter(formatter)
+        logging.getLogger("").addHandler(console)
+    
     def __init__(self):
         self.Config = get_config()
-        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+        self.start_log()
         updater = Updater(token=self.Config["token"])
         dispatcher = updater.dispatcher
         for plugin in self.Config.keys():

@@ -5,7 +5,7 @@
 from telegram.ext import CommandHandler
 from ..main import Bot
 
-@Bot.plugin_register("Base")
+@Bot.plugin_register("base")
 class Base:
     
     message = ""

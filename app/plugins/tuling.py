@@ -8,7 +8,7 @@ import logging
 from telegram.ext import MessageHandler, Filters
 from ..main import Bot
 
-@Bot.plugin_register('Tuling')
+@Bot.plugin_register('tuling')
 class Tuling:
     
     key = ""

@@ -26,13 +26,15 @@ class Bot:
                   "critical": logging.CRITICAL
                   }
         level = LEVELS[self.Config.get("log_level", "info")]
-        formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        logging.basicConfig(format=formatter, level=level)#, \
-        #    filename="app.log", filemode="a")
-        #console = logging.StreamHandler()
-        #console.setLevel(level)
-        #console.setFormatter(formatter)
-        #logging.getLogger("console").addHandler(console)
+        logging.basicConfig(level=level, 
+            format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", 
+            filename="app.log", 
+            filemode="a")
+        console = logging.StreamHandler()
+        console.setLevel(level)
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        console.setFormatter(formatter)
+        logging.getLogger('').addHandler(console)
     
     def __init__(self):
         self.Config = get_config()

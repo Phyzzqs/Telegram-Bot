@@ -19,7 +19,7 @@ def load_conf(conf = "config.json"):
 	nece_keys = ["token", "message"]
 	for key in nece_keys:
 		if not key in config.keys():
-			print("Config file error")
+			logging.error("Config file error.")
 			sys.exit(1)
 	return config
 	
@@ -30,8 +30,8 @@ def echo(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
 	
 def main():
-	Config = load_conf()
 	logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
+	Config = load_conf()
 	updater = Updater(token=Config["token"])
 	dispatcher = updater.dispatcher
 	start_handler = CommandHandler('start', start)

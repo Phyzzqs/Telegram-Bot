@@ -1,5 +1,6 @@
 {
-    "token": "",
+    "log_level": "info"
+	"token": "",
     "Base": {
 	    "message": "It's working!"
 	},

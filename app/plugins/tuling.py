@@ -50,7 +50,7 @@ class Tuling:
         
     def echo(self, bot, update):
         text = self.get_message(update.message.text, update.message.from_user.username)
-        if isinstance(text, str):
+        if isinstance(text, (str, unicode)):
             bot.send_message(chat_id=update.message.chat_id, text=text)
         
     def process(self, updater, dispatcher, config):

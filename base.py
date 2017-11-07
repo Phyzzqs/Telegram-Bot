@@ -11,7 +11,22 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
 
-Config = {}
+def load_conf(conf = "config.json"):
+    f = open(conf, "r")
+    text = f.read()
+    config = json.loads(text)
+    f.close()
+    nece_keys = ["token", "message", "tuling"]
+    for key in nece_keys:
+        if not key in config.keys():
+            logging.error("Config file error.")
+            sys.exit(1)
+    print(config)
+    print(type(config["tuling"]))
+    print(config["tuling"])
+    return config
+
+Config = load_conf().copy()
 
 class Tuling:
     key = ""
@@ -49,24 +64,12 @@ class Tuling:
         else:
             logging.warn("Unknown response code" + str(re["code"]))
             return 1
-
-def load_conf(conf = "config.json"):
-    f = open(conf, "r")
-    text = f.read()
-    config = json.loads(text)
-    f.close()
-    nece_keys = ["token", "message", "tuling"]
-    for key in nece_keys:
-        if not key in config.keys():
-            logging.error("Config file error.")
-            sys.exit(1)
-    return config
     
 def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=Config["message"])
     
 def echo(bot, update):
-    key = Config.get("tuling")
+    key = Config["tuling"]
     tuling = Tuling(key)
     text = tuling.get_message(update.message.text, update.message.from_user.username)
     if isinstance(text, str):
@@ -74,7 +77,6 @@ def echo(bot, update):
     
 def main():
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-    Config = load_conf()
     updater = Updater(token=Config["token"])
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)

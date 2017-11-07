@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # coding:utf-8
-# config.py
+# app/config.py
 
 import json
 import logging
@@ -20,9 +20,4 @@ def get_config(conf = "config.json"):
     for json in json_list:
         user = load(json)
         config.update(user) 
-    nece_keys = ["token", "message", "tuling"]
-    for key in nece_keys:
-        if not key in config.keys():
-            logging.error("Config file error.")
-            sys.exit(1)
     return config

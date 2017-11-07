@@ -8,7 +8,7 @@ import logging
 from tuling import Tuling
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-Config = config.load()
+Config = config.get_config()
     
 def start(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text=Config["message"])

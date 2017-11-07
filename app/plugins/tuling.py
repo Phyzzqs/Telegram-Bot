@@ -5,6 +5,7 @@
 import requests
 import hashlib
 import logging
+import sys
 from telegram.ext import MessageHandler, Filters
 from ..main import Bot
 
@@ -50,8 +51,12 @@ class Tuling:
         
     def echo(self, bot, update):
         text = self.get_message(update.message.text, update.message.from_user.username)
-        if isinstance(text, (str, unicode)):
-            bot.send_message(chat_id=update.message.chat_id, text=text)
+        if sys.version > "3":
+            if isinstance(text, str):
+                bot.send_message(chat_id=update.message.chat_id, text=text)
+        else:
+            if isinstance(text, (str, unicode)):
+                bot.send_message(chat_id=update.message.chat_id, text=text)
         
     def process(self, updater, dispatcher, config):
         self.key = config["key"]

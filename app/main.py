@@ -9,7 +9,6 @@ from telegram.ext import Updater
 
 class Bot:
     PLUGINS = {}
-    
     Config = {}
     
     @classmethod
@@ -20,14 +19,20 @@ class Bot:
         return wrapper
     
     def start_log(self):
-        level = logging.INFO
+        LEVELS = {"debug": logging.DEBUG,
+                  "info": logging.INFO,
+                  "warning": logging.WARNING,
+                  "error": logging.ERROR,
+                  "critical": logging.CRITICAL
+                  }
+        level = LEVELS[self.Config.get("log_level", "info")]
         formatter = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-        logging.basicConfig(format=formatter, level=level, \
-            filename="app.log", filemode="a")
-        console = logging.StreamHandler()
-        console.setLevel(level)
-        console.setFormatter(formatter)
-        logging.getLogger("").addHandler(console)
+        logging.basicConfig(format=formatter, level=level)#, \
+        #    filename="app.log", filemode="a")
+        #console = logging.StreamHandler()
+        #console.setLevel(level)
+        #console.setFormatter(formatter)
+        #logging.getLogger("console").addHandler(console)
     
     def __init__(self):
         self.Config = get_config()

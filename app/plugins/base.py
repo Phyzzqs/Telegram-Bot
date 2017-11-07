@@ -10,7 +10,7 @@ class Base:
     
     message = ""
         
-    def start(bot, update):
+    def start(self, bot, update):
         bot.send_message(chat_id = update.message.chat_id, text = self.message)
         
     def process(self, updater, dispatcher, config):

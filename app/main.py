@@ -25,9 +25,9 @@ class Bot:
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
         updater = Updater(token=self.Config["token"])
         dispatcher = updater.dispatcher
-        for plugin in self.Config["plugins"].keys():
-            config = self.Config["plugins"][plugin]
-            if config.get("enabled", True):
+        for plugin in self.Config.keys():
+            config = self.Config[plugin]
+            if isinstance(config, dict) and config.get("enabled", True):
                 if plugin in self.PLUGINS.keys():
                     self.PLUGINS[plugin]().process(updater, dispatcher, config)
                 else:

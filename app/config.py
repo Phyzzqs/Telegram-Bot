@@ -14,10 +14,9 @@ def load(conf = "config.json"):
     return config
 
 def get_config(conf = "config.json"):
-    default = load(conf)
-    config = default.copy()
+    config = load(conf)
     json_list = list(glob.glob("conf.d/*.json"))
     for json in json_list:
         user = load(json)
-        config.update(user) 
+        config = {**config, **user}
     return config

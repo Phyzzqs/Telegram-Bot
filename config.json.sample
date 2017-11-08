@@ -1,10 +1,10 @@
 {
-    "log_level": "info"
-	"token": "",
-    "Base": {
-	    "message": "It's working!"
-	},
-	"tuling": {
-	    "key": ""
-	}
+    "log_level": "info",
+    "token": "",
+    "base": {
+        "message": "It's working!"
+    },
+    "tuling": {
+        "key": ""
+    }
 }

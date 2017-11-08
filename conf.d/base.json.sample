@@ -1,6 +1,6 @@
 {
-	"base": {
-	    "enabled": true,
-	    "message": "It's working!"
-	}
+    "base": {
+        "enabled": true,
+        "message": "It's working!"
+    }
 }

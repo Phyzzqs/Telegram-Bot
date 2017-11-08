@@ -3,7 +3,6 @@
 # app/plugin/tuling.py
 
 import requests
-import hashlib
 import logging
 import sys
 from telegram.ext import MessageHandler, Filters
@@ -11,7 +10,6 @@ from ..main import Bot
 
 @Bot.plugin_register('tuling')
 class Tuling:
-    
     key = ""
     api = "http://www.tuling123.com/openapi/api"
     
@@ -40,10 +38,8 @@ class Tuling:
             logging.warn("Unknown response code" + str(re["code"]))
             return 1
             
-    def get_message(self, info, user_name):
-        md5obj = hashlib.md5()
-        md5obj.update(user_name.encode())
-        userid = md5obj.hexdigest()
+    def get_message(self, info, uid):
+        userid = str(uid)
         data = {"key": self.key, "info": info, "userid": userid}
         re = requests.post(self.api, data = data).json()
         return self.deal(re)

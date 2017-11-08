@@ -4,16 +4,19 @@
 
 import json
 import logging
+import sys
 import glob
 
-def load(conf = "config.json"):
+defaultconf = sys.path[0]+"/config.json"
+
+def load(conf = defaultconf):
     f = open(conf, "r")
     text = f.read()
     config = json.loads(text)
     f.close()
     return config
 
-def get_config(conf = "config.json"):
+def get_config(conf = defaultconf):
     default = load(conf)
     config = default.copy()
     json_list = list(glob.glob("conf.d/*.json"))

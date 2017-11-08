@@ -43,7 +43,7 @@ class Bot:
             config = self.Config[plugin]
             if isinstance(config, dict) and config.get("enabled", True):
                 if plugin in self.PLUGINS.keys():
-                    self.PLUGINS[plugin]().process(updater, dispatcher, config)
+                    self.PLUGINS[plugin]().init(updater, dispatcher, config)
                 else:
                     logging.error("Cannot find plugin " + plugin)
                     sys.exit(1)

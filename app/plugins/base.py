@@ -13,7 +13,7 @@ class Base:
     def start(self, bot, update):
         bot.send_message(chat_id = update.message.chat_id, text = self.message)
         
-    def process(self, updater, dispatcher, config):
+    def init(self, updater, dispatcher, config):
         self.message = config["message"]
         start_handler = CommandHandler("start", self.start)
         dispatcher.add_handler(start_handler)

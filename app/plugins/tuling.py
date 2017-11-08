@@ -29,7 +29,7 @@ class Tuling:
             return 1
         elif re["code"] == 40002:
             logging.warn("Empty info.")
-            return "你在说什么，我听不清"
+            return re.get("text", "你在说什么，我听不清")
         elif re["code"] == 40004:
             logging.warn("The number of requests has been exhausted.")
             return "我累了，明天再聊"
@@ -56,9 +56,14 @@ class Tuling:
                 bot.send_message(chat_id=chat_id, text=text)
     
     def chat(self, bot, update):
-        self.process(bot, update.message.text.lstrip("/chat"), 
-            update.message.chat_id, 
-            update.message.from_user.id)
+        if update.message.text.find("/chat@"+self.botname) == -1:
+            self.process(bot, update.message.text.lstrip("/chat"), 
+                update.message.chat_id, 
+                update.message.from_user.id)
+        else:
+            self.process(bot, update.message.text.lstrip("/chat@"+self.botname), 
+                update.message.chat_id, 
+                update.message.from_user.id)
             
     def echo(self, bot, update):
         if update.message.chat.type != "group":

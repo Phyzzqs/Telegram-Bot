@@ -2,4 +2,6 @@
 
 ## 运行
 
-python3 -m app.run
+```bash
+python run.py #或python3 run.py
+```

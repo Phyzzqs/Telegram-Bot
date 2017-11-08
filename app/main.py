@@ -36,9 +36,7 @@ class Bot:
         console.setFormatter(formatter)
         logging.getLogger('').addHandler(console)
     
-    def __init__(self):
-        self.Config = get_config()
-        self.start_log()
+    def run(self):
         updater = Updater(token=self.Config["token"])
         dispatcher = updater.dispatcher
         for plugin in self.Config.keys():
@@ -50,3 +48,7 @@ class Bot:
                     logging.error("Cannot find plugin " + plugin)
                     sys.exit(1)
         updater.start_polling()
+
+    def __init__(self):
+        self.Config = get_config()
+        self.start_log()

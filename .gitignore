@@ -2,3 +2,4 @@
 *.json
 app.log
 *.pyc
+log.d/execute/.pidfile

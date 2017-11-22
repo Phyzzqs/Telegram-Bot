@@ -46,8 +46,8 @@ class Tuling:
         re = requests.post(self.api, data = data).json()
         return self.deal(re)
 
-    def process(self, bot, message, chat_id, uid):
-        text = self.get_message(message, uid)
+    def process(self, bot, message, chat_id, uid, head=""):
+        text = head + self.get_message(message, uid)
         if sys.version > "3":
             if isinstance(text, str):
                 bot.send_message(chat_id=chat_id, text=text)
@@ -56,30 +56,40 @@ class Tuling:
                 bot.send_message(chat_id=chat_id, text=text)
     
     def chat(self, bot, update):
+        head = ""
+        if update.message.chat.type in ["group", "supergroup"]:
+            if isinstance(update.message.from_user.username, str):
+                head = "2"+update.message.from_user.username+""
         if update.message.text.find("/chat@"+self.botname) == -1:
             self.process(bot, update.message.text.lstrip("/chat"), 
                 update.message.chat_id, 
-                update.message.from_user.id)
+                update.message.from_user.id,
+                head)
         else:
             self.process(bot, update.message.text.lstrip("/chat@"+self.botname), 
                 update.message.chat_id, 
-                update.message.from_user.id)
+                update.message.from_user.id,
+                head)
             
     def echo(self, bot, update):
-        if update.message.chat.type != "group":
+        if update.message.chat.type in ["group", "supergroup"]:
             self.process(bot, update.message.text, 
                 update.message.chat_id, 
                 update.message.from_user.id)
         elif self.listen_group:
+            if isinstance(update.message.from_user.username, str):
+                head = "2"+update.message.from_user.username+""
             if update.message.reply_to_message != None:
                 if update.message.reply_to_message.from_user.username == self.botname:
                     self.process(bot, update.message.text, 
                         update.message.chat_id, 
-                        update.message.from_user.id)
+                        update.message.from_user.id,
+                        head)
             elif update.message.text.find("@"+self.botname) == 0:
                 self.process(bot, update.message.text.lstrip("@"+self.botname), 
                     update.message.chat_id, 
-                    update.message.from_user.id)
+                    update.message.from_user.id,
+                    head)
         
     def init(self, updater, dispatcher, config):
         self.key = config["key"]

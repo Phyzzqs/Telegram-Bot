@@ -29,12 +29,12 @@ class Execute:
             os.system(command)
             text = "程序运行结束，PID=" + str(pid)
             bot.send_message(chat_id = update.message.chat_id, text = text)
-            sys.exit(0)
         except:
             text = "Unexpected error:", sys.exc_info()[0]
             bot.send_message(chat_id = update.message.chat_id, text = text)
             logging.error(text)
             sys.exit(1)
+        sys.exit(0)
     
     def kill(self, bot, update):
         try:
@@ -45,12 +45,10 @@ class Execute:
             text = "OS Error: {0}".format(e)
             bot.send_message(chat_id = update.message.chat_id, text = text)
             logging.error(text)
-            return
         except:
             text = "Unexpected error:", sys.exc_info()[0]
             bot.send_message(chat_id = update.message.chat_id, text = text)
             logging.error(text)
-            return
     
     def init(self, updater, dispatcher, config):
         self.work_dir = config.get("work_dir", os.getcwd())

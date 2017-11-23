@@ -19,8 +19,6 @@ class Echo():
                 params=urllib.parse.parse_qs(self.queryString)
                 if "text" in params:
                     r_str="Succeed"
-                    print(type(params["text"][0]))
-                    print(params["text"][0])
                     for chat_id in self.user:
                         self.bot.send_message(chat_id = chat_id, text = params["text"][0])
             encoded = ''.join(r_str).encode("UTF-8")

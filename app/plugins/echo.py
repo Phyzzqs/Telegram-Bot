@@ -33,7 +33,7 @@ class Echo():
     
         def do_POST(self):
             s=str(self.rfile.readline(),"UTF-8")
-            print(urllib.parse.parse_qs(urllib.parse.unquote(s)))
+            print (urllib.parse.parse_qs(urllib.parse.unquote(s)))
             self.send_response(301)
             self.send_header("Location", "/?"+s)
             self.end_headers()
